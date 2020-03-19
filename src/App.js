@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
 import axios from 'axios';
 import './App.css';
 
 class App extends Component {
 	state = {
 		users: [],
-		loading: false
+		loading: false,
+		alert: null
 	};
 
 	searchUsers = async text => {
@@ -26,13 +28,30 @@ class App extends Component {
 		this.setState({ users: res.data.items, loading: false });
 	};
 
+	clearUsers = () => {
+		this.setState({ users: [], loading: false });
+	};
+
+	setAlert = (message, type) => {
+		this.setState({ alert: { message, type } });
+		setTimeout(() => this.setState({ alert: null }), 5000);
+	};
+
 	render() {
+		const { users, loading, alert } = this.state;
+
 		return (
 			<div className='App'>
 				<Navbar />
 				<div className='container'>
-					<Search searchUsers={this.searchUsers} />
-					<Users loading={this.state.loading} users={this.state.users} />
+					<Alert alert={alert} />
+					<Search
+						searchUsers={this.searchUsers}
+						clearUsers={this.clearUsers}
+						showClear={users.length > 0}
+						setAlert={this.setAlert}
+					/>
+					<Users loading={loading} users={users} />
 				</div>
 			</div>
 		);
