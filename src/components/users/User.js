@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 const User = ({ getUser, getUserRepos, user, repos, loading, match }) => {
 	useEffect(() => {
 		getUser(match.params.login);
-    getUserRepos(match.params.login);
-    // eslint-disable-next-line
+		getUserRepos(match.params.login);
+		// eslint-disable-next-line
 	}, []);
 
 	const {
