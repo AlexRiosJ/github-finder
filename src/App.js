@@ -25,8 +25,8 @@ class App extends Component {
 			{},
 			{
 				auth: {
-					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
-					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+					client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
+					client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
 			}
 		);
@@ -40,8 +40,8 @@ class App extends Component {
 			{},
 			{
 				auth: {
-					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
-					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+					client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
+					client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
 			}
 		);
@@ -55,8 +55,8 @@ class App extends Component {
 			{},
 			{
 				auth: {
-					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
-					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+					client_id: process.env.REACT_APP_GITHUB_CLIENT_ID,
+					client_secret: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
 			}
 		);
@@ -106,9 +106,9 @@ class App extends Component {
 										{...props}
 										getUser={this.getUser}
 										getUserRepos={this.getUserRepos}
-										user={user}
-										repos={repos}
-										loafing={loading}
+                    user={user}
+                    repos={repos}
+										loading={loading}
 									/>
 								)}
 							/>
