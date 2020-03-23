@@ -11,10 +11,9 @@ const Users = () => {
 	} else {
 		return (
 			<div style={userStyle}>
-				{' '}
 				{users.map(user => (
 					<UserItem key={user.id} user={user} />
-				))}{' '}
+				))}
 			</div>
 		);
 	}

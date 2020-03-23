@@ -4,8 +4,8 @@ import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
 import {
 	SEARCH_USERS,
-  GET_USER,
-  GET_REPOS,
+	GET_USER,
+	GET_REPOS,
 	CLEAR_USERS,
 	SET_LOADING
 } from '../types';
@@ -36,9 +36,9 @@ const GithubState = props => {
 			type: SEARCH_USERS,
 			payload: res.data.items
 		});
-  };
-  
-  const getUser = async username => {
+	};
+
+	const getUser = async username => {
 		setLoading();
 		const res = await axios.get(
 			`https://api.github.com/users/${username}`,
@@ -54,9 +54,9 @@ const GithubState = props => {
 			type: GET_USER,
 			payload: res.data
 		});
-  };
-  
-  const getUserRepos = async username => {
+	};
+
+	const getUserRepos = async username => {
 		setLoading();
 		const res = await axios.get(
 			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
@@ -69,9 +69,9 @@ const GithubState = props => {
 			}
 		);
 		dispatch({
-      type: GET_REPOS,
-      payload: res.data
-    })
+			type: GET_REPOS,
+			payload: res.data
+		});
 	};
 
 	const clearUsers = () => dispatch({ type: CLEAR_USERS });
@@ -84,10 +84,10 @@ const GithubState = props => {
 				user: state.user,
 				repos: state.repos,
 				loading: state.loading,
-        searchUsers,
-        clearUsers,
-        getUser,
-        getUserRepos
+				searchUsers,
+				clearUsers,
+				getUser,
+				getUserRepos
 			}}
 		>
 			{props.children}

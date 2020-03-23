@@ -6,8 +6,8 @@ const Search = () => {
 	const [text, setText] = useState('');
 	const githubContext = useContext(GithubContext);
 	const { users, clearUsers, searchUsers } = githubContext;
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
+	const alertContext = useContext(AlertContext);
+	const { setAlert } = alertContext;
 
 	const onSubmit = e => {
 		e.preventDefault();
