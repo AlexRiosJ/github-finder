@@ -54,7 +54,7 @@ const User = ({ match }) => {
 						style={{ width: '260px' }}
 					/>
 					<h1>{name}</h1>
-					<p>Location: {location}</p>
+					<p><i className="fas fa-map-marked-alt" /> {location}</p>
 				</div>
 				<div>
 					{bio && (
