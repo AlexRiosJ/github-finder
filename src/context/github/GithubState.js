@@ -7,7 +7,8 @@ import {
 	GET_USER,
 	GET_REPOS,
 	CLEAR_USERS,
-	SET_LOADING
+	SET_LOADING,
+	NOT_FOUND
 } from '../types';
 
 const GithubState = props => {
@@ -15,7 +16,8 @@ const GithubState = props => {
 		users: [],
 		user: {},
 		repos: [],
-		loading: false
+		loading: false,
+		notFound: false
 	};
 
 	const [state, dispatch] = useReducer(GithubReducer, initialState);
@@ -38,37 +40,48 @@ const GithubState = props => {
 	};
 
 	const getUser = async username => {
-		setLoading();
-		const res = await axios.get(
-			`https://api.github.com/users/${username}`,
-			{
+		try {
+			setLoading();
+			const res = await axios.get(`https://api.github.com/users/${username}`, {
 				auth: {
 					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
 					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
-			}
-		);
-		dispatch({
-			type: GET_USER,
-			payload: res.data
-		});
+			});
+			dispatch({
+				type: GET_USER,
+				payload: res.data
+			});
+		} catch (err) {
+			dispatch({
+				type: NOT_FOUND,
+				payload: true
+			});
+		}
 	};
 
 	const getUserRepos = async username => {
-		setLoading();
-		const res = await axios.get(
-			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
-			{
-				auth: {
-					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
-					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+		try {
+			setLoading();
+			const res = await axios.get(
+				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
+				{
+					auth: {
+						username: process.env.REACT_APP_GITHUB_CLIENT_ID,
+						password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
+					}
 				}
-			}
-		);
-		dispatch({
-			type: GET_REPOS,
-			payload: res.data
-		});
+			);
+			dispatch({
+				type: GET_REPOS,
+				payload: res.data
+			});
+		} catch (err) {
+			dispatch({
+				type: NOT_FOUND,
+				payload: true
+			});
+		}
 	};
 
 	const clearUsers = () => dispatch({ type: CLEAR_USERS });
@@ -81,6 +94,7 @@ const GithubState = props => {
 				user: state.user,
 				repos: state.repos,
 				loading: state.loading,
+				notFound: state.notFound,
 				searchUsers,
 				clearUsers,
 				getUser,

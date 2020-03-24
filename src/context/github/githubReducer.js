@@ -3,7 +3,8 @@ import {
 	GET_USER,
 	GET_REPOS,
 	CLEAR_USERS,
-	SET_LOADING
+	SET_LOADING,
+	NOT_FOUND
 } from '../types';
 
 export default (state, action) => {
@@ -36,6 +37,12 @@ export default (state, action) => {
 			return {
 				...state,
 				loading: true
+			};
+		case NOT_FOUND:
+			return {
+				...state,
+				loading: false,
+				notFound: action.payload
 			};
 		default:
 			return state;

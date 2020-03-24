@@ -1,12 +1,20 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
+import NotFound from '../pages/NotFound';
 import Repos from '../repos/Repos';
 import { Link } from 'react-router-dom';
 import GithubContext from '../../context/github/githubContext';
 
 const User = ({ match }) => {
 	const githubContext = useContext(GithubContext);
-	const { getUser, getUserRepos, loading, user, repos } = githubContext;
+	const {
+		getUser,
+		getUserRepos,
+		loading,
+		user,
+		repos,
+		notFound
+	} = githubContext;
 
 	useEffect(() => {
 		getUser(match.params.login);
@@ -26,12 +34,15 @@ const User = ({ match }) => {
 		followers,
 		following,
 		public_repos,
-		public_gists,
-		hireable
+		public_gists
 	} = user;
 
 	if (loading) {
 		return <Spinner />;
+	}
+
+	if (notFound) {
+		return <NotFound />;
 	}
 
 	return (
@@ -39,12 +50,6 @@ const User = ({ match }) => {
 			<Link to='/' className='btn btn-light'>
 				Back To Search
 			</Link>
-			Hireable:{' '}
-			{hireable ? (
-				<i className='fas fa-check text-success' />
-			) : (
-				<i className='fas fa-times-circle text-danger' />
-			)}
 			<div className='card grid-2'>
 				<div className='all-center'>
 					<img
@@ -54,7 +59,9 @@ const User = ({ match }) => {
 						style={{ width: '260px' }}
 					/>
 					<h1>{name}</h1>
-					<p><i className="fas fa-map-marked-alt" /> {location}</p>
+					<p>
+						<i className='fas fa-map-marked-alt' /> {location}
+					</p>
 				</div>
 				<div>
 					{bio && (
