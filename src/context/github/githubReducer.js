@@ -4,7 +4,8 @@ import {
 	GET_REPOS,
 	CLEAR_USERS,
 	SET_LOADING,
-	NOT_FOUND
+	NOT_FOUND,
+	GET_NOT_FOUND_GIF
 } from '../types';
 
 export default (state, action) => {
@@ -44,6 +45,11 @@ export default (state, action) => {
 				loading: false,
 				notFound: action.payload
 			};
+		case GET_NOT_FOUND_GIF:
+			return {
+				...state,
+				notFoundGif: action.payload
+			}
 		default:
 			return state;
 	}

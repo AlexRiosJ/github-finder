@@ -8,7 +8,8 @@ import {
 	GET_REPOS,
 	CLEAR_USERS,
 	SET_LOADING,
-	NOT_FOUND
+	NOT_FOUND,
+	GET_NOT_FOUND_GIF
 } from '../types';
 
 const GithubState = props => {
@@ -17,7 +18,8 @@ const GithubState = props => {
 		user: {},
 		repos: [],
 		loading: false,
-		notFound: false
+		notFound: false,
+		notFoundGif: null
 	};
 
 	const [state, dispatch] = useReducer(GithubReducer, initialState);
@@ -87,6 +89,16 @@ const GithubState = props => {
 	const clearUsers = () => dispatch({ type: CLEAR_USERS });
 	const setLoading = () => dispatch({ type: SET_LOADING });
 
+	const getNotFoundGif = async () => {
+		const res = await axios.get(
+			`https://api.giphy.com/v1/gifs/random?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&tag=404%20not%20found`
+		);
+		dispatch({
+			type: GET_NOT_FOUND_GIF,
+			payload: res.data.data.image_url.replace('media3', 'media')
+		});
+	};
+
 	return (
 		<GithubContext.Provider
 			value={{
@@ -95,10 +107,12 @@ const GithubState = props => {
 				repos: state.repos,
 				loading: state.loading,
 				notFound: state.notFound,
+				notFoundGif: state.notFoundGif,
 				searchUsers,
 				clearUsers,
 				getUser,
-				getUserRepos
+				getUserRepos,
+				getNotFoundGif
 			}}
 		>
 			{props.children}
