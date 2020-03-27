@@ -15,7 +15,7 @@ const NotFound = () => {
 			<h1>404 Not Found</h1>
 			<p className='lead'>The page you are looking for does not exist...</p>
 			<div className='text-center'>
-				<img src={notFoundGif} className='rounded' alt='' style={{ width: '700px' }}/>
+				<img src={notFoundGif} alt='' />
 			</div>
 		</div>
 	);
