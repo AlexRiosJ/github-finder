@@ -12,20 +12,6 @@ import {
 	GET_NOT_FOUND_GIF
 } from '../types';
 
-let githubClientId;
-let githubClientSecret;
-let giphyApiKey;
-
-if (process.env.NODE_ENV !== 'production') {
-	githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
-	githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
-	giphyApiKey = process.env.REACT_APP_GIPHY_API_KEY;
-} else {
-	githubClientId = process.env.GITHUB_CLIENT_ID;
-	githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-	giphyApiKey = process.env.GIPHY_API_KEY;
-}
-
 const GithubState = props => {
 	const initialState = {
 		users: [],
@@ -44,8 +30,8 @@ const GithubState = props => {
 			`https://api.github.com/search/users?q=${text}`,
 			{
 				auth: {
-					username: githubClientId,
-					password: githubClientSecret
+					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
+					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
 			}
 		);
@@ -60,8 +46,8 @@ const GithubState = props => {
 			setLoading();
 			const res = await axios.get(`https://api.github.com/users/${username}`, {
 				auth: {
-					username: githubClientId,
-					password: githubClientSecret
+					username: process.env.REACT_APP_GITHUB_CLIENT_ID,
+					password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 				}
 			});
 			dispatch({
@@ -83,8 +69,8 @@ const GithubState = props => {
 				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
 				{
 					auth: {
-						username: githubClientId,
-						password: githubClientSecret
+						username: process.env.REACT_APP_GITHUB_CLIENT_ID,
+						password: process.env.REACT_APP_GITHUB_CLIENT_SECRET
 					}
 				}
 			);
@@ -105,7 +91,7 @@ const GithubState = props => {
 
 	const getNotFoundGif = async () => {
 		const res = await axios.get(
-			`https://api.giphy.com/v1/gifs/random?api_key=${giphyApiKey}&tag=404%20not%20found`
+			`https://api.giphy.com/v1/gifs/random?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&tag=404%20not%20found`
 		);
 		dispatch({
 			type: GET_NOT_FOUND_GIF,
